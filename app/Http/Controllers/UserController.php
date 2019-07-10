@@ -20,12 +20,18 @@ class UserController extends Controller
     public function index()
     {
         $searchText = request('team');
+        $stateText = request('state');
         $users = User::query()->with('team','skills','profession') // problema n+1
             ->search($searchText)     //Using scope in User Model
+            ->byState($stateText)
             ->orderBy('created_at','DESC')
             ->paginate(10);
-        $title = 'List of Users';
-        return view('users.index',compact('users','title'));
+        return view('users.index',[
+            'users' => $users,
+            'title' => 'List of Users',
+            'roles' => trans('users.filters.roles'),
+            'states' => trans('users.filters.states')
+        ]);
     }
 
     /**

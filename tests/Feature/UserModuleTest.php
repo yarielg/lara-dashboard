@@ -380,7 +380,8 @@ class UserModuleTest extends TestCase
             'email' => 'yariko0529@gmail.com',
             'password' => '123456',
             'profession_id' => $profession->id,
-            'role' => 'user'
+            'role' => 'user',
+            'active' => true
 
         ],$customAttributes);
     }

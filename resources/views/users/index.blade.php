@@ -11,11 +11,12 @@
             </div>
             <div class="col-md-2">
 
-                <a href="{{route('users.trashed')}}" class="btn btn-primary btn-sm float-right"><i class="fas fa-trash"></i> Trash</a>
+                <a href="{{route('users.trashed')}}" class="btn btn-primary btn-sm float-right {{isset($states)? '' : 'invisible'}}"><i class="fas fa-trash"></i> Trash</a>
+                <a href="{{route('users.index')}}" class="btn btn-primary btn-sm float-right {{!isset($states)? '' : 'invisible'}}"><i class="fas fa-trash"></i> Go back</a>
             </div>
         </div>
 
-        @include('users._filters')
+        @includeWhen(isset($states),'users._filters')
 
         <table class="table">
             <thead class="thead-dark">
@@ -33,7 +34,13 @@
                 <tr>
                     <th scope="row">{{$user->id}}</th>
                     <td>
-                        <p class="mb-0"><b>{{$user->name}}</b></p>
+                        <p class="mb-0"><b><a href="{{route('users.show',$user)}}">{{$user->name}} </a></b>
+                        @if($user->active)
+                                <span class="active-state"></span>
+                        @else
+                                <span class="inactive-state"></span>
+                        @endif
+                        </p>
                         <p class="mb-0 text-muted text-small">{{$user->team->name?: 'Not Assigned'}}</p>
                         <p class="mb-0"><span class="badge badge-info">{{isset($user->profession)?$user->profession->title:'Empty'}}</span></p>
                     </td>

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','profession_id','team_id','role'
+        'name', 'email', 'password','profession_id','team_id','role','active'
     ];
 
     /**
@@ -37,6 +37,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'active' => 'bool'
     ];
 
     public function profession(){
@@ -75,6 +76,16 @@ class User extends Authenticatable
 
     }
 
+
+    function scopeByState($query, $stateText ){
+        $query->when($stateText, function($query, $stateText){
+            if($stateText == 'active'){
+                $query->where('active',1);
+            }elseif($stateText == 'inactive'){
+                $query->where('active',0);
+            }
+        });
+    }
    /* static function createUser($data){
 
         DB::transaction(function() use($data){

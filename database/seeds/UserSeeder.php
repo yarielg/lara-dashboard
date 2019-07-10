@@ -22,7 +22,8 @@ class UserSeeder extends Seeder
             $user->skills()->attach($skills->random(1,4));
             $user->update([
                'profession_id' => random_int(1,10),
-               'team_id' => random_int(1,10)
+               'team_id' => random_int(1,10),
+                'active' => rand(0,3) ? true : false
             ]);
 
         });
