@@ -1,0 +1,1 @@
+<span>&copy;2019 Laravel Project to Learn About Everything</span>
